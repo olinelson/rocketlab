@@ -1,6 +1,9 @@
 import express from "express"
 import env from "./domain/env/env.js"
 import authMiddleware from "./middleware/authMiddleware.js"
+import runMigrations from "./db/runMigrations.js"
+
+await runMigrations()
 
 const { PORT } = env
 const app = express()
