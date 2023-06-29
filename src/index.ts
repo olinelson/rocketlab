@@ -1,13 +1,13 @@
 import express from "express"
-import "dotenv/config"
-import { Env } from "./domain/env/env.js"
+import env from "./domain/env/env.js"
+import authMiddleware from "./middleware/authMiddleware.js"
 
-const env = Env.parse(process.env)
+const { PORT } = env
 const app = express()
-const port = 3000
 
 app.get("/ping", (_req, res) => res.send("pong"))
+app.get("/private", authMiddleware, (_req, res) => res.send("pong"))
 
-app.listen(port, () =>
-  console.log(`⚡️[server]: Server is running on port ${env.PORT}`)
+app.listen(PORT, () =>
+  console.log(`⚡️[server]: Server is running on port ${PORT}`)
 )
