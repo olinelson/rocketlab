@@ -14,10 +14,14 @@ const app = express()
 
 app.get("/ping", (_req, res) => res.send("pong"))
 
-app.get("/customers", authMiddleware, async (req, res) => {
-  const filters = ListCustomersFilters.parse(req.query)
-  const data = await listCustomers(filters)
-  res.json(data)
+app.get("/customers", authMiddleware, async (req, res, next) => {
+  try {
+    const filters = ListCustomersFilters.parse(req.query)
+    const data = await listCustomers(filters)
+    res.json(data)
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.listen(PORT, () => console.log(`⚡️ Server is running on port ${PORT}`))
