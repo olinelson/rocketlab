@@ -5,4 +5,4 @@ import env from "../domain/env/env.js"
 const { DB_URL } = env
 
 const client = postgres(DB_URL)
-export default drizzle(client)
+export default drizzle(client, { logger: true })
